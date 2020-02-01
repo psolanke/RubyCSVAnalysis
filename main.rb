@@ -32,6 +32,9 @@ class CSVAnalysis
             headers_set = headers_set | row.keys.to_set
         }
         headers_set = headers_set.to_a
+
+        Dir.mkdir(@@RESULTS_FOLDER) unless File.exists?(@@RESULTS_FOLDER)
+
         file_full_path = File.join(@@RESULTS_FOLDER, file_name+"_"+Time.now.nsec.to_s+".csv")
         CSV.open(file_full_path, "wb", :headers => headers_set, :write_headers => true){ |csv|
             data_hash_array.each{ |row| csv << row }
